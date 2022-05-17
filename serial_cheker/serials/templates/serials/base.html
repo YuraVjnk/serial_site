@@ -1,0 +1,66 @@
+{% load static%}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+    </style>
+    <meta charset="UTF-8">
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="{% static 'serials/css/styles.css' %}">
+</head>
+<body>
+
+
+
+{%block menu%}
+<div class="username">
+<h3>{%for position in menu%}
+    <a href="{% url position.url  %}">{{position.name}}</a>
+    {%endfor%}
+    <label>{%if request.user.is_authenticated%}
+        {{user.username}} | <a href="{% url 'logout' %}">Выход </a></h3>
+    {% else %}
+    <a href="{% url 'registration' %}">Регистрация</a> |
+    <a href="{% url 'login' %}">Вход </a></h3>
+    {% endif %}</label>
+</div>
+{%endblock%}
+
+
+
+{% block content %}{% endblock %}
+
+
+
+<div class="paginator">
+    <ul>
+        {% if page_obj.has_previous%}
+        <li class="switch">
+            <a href="?page={{page_obj.previous_page_number}}"><</a>
+        </li>
+        {%endif%}
+
+        {% for p in paginator.page_range%}
+        {% if p == page_obj.number %}
+        <li class="current">
+            {{p}}
+        </li>
+        {% elif p <= page_obj.number|add:3 and p >= page_obj.number|add:-3 %}
+        <li class="other">
+            <a href="?page={{p}}">{{p}}</a>
+        </li>
+        {% endif %}
+        {%endfor%}
+
+        {%if page_obj.has_next%}
+        <li class="switch">
+            <a href="?page={{page_obj.next_page_number}}">></a>
+        </li>
+        {%endif%}
+    </ul>
+</div>
+
+</body>
+</html>

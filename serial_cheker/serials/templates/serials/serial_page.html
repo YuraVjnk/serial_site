@@ -1,0 +1,47 @@
+{% extends 'serials\base.html'%}
+
+
+{% block content %}
+<div class="serial-info">
+<h1>{{serial.title}}</h1>
+<h2>{{serial.platform|upper}}</h2>
+<h3>Author Rating: {{serial.rating}} || User Rating:
+{% if avg %}{{avg|floatformat:2}}{%else%}No Rating Yet{%endif%}</h3>
+{% if serial.main_image != 'No image'%}
+<img src="{{serial.main_image.url}}" class="serial_image">
+{%else%}
+<h3>No Image</h3>
+{%endif%}
+<h4>{{serial.details}}</h4>
+</div>
+
+
+
+<div class="comment-form">
+<form method="post">
+{% csrf_token%}
+<div>{{form.non_field_errors}}</div>
+{% for f in form%}
+<div class="error">{{f.errors}}</div>
+<div class="form-group">
+<label for="{{f.id_for_label}}">{{f.label}}:</label>{{f}}
+</div>
+{% endfor %}
+<button type="submit" class="btn">Добавить свой Отзыв</button>
+</form>
+</div>
+
+
+{%if comments%}
+{% for comment in comments%}
+<div class="comment">
+{{comment.username}} ({{comment.email}})
+Rating: {{comment.rating}}/10
+        <br>
+<label>{{comment.comment}}</label>
+</div>
+{%endfor%}
+{%else%}
+<label>No Comments Yet, you can be first!</label>
+{%endif%}
+{% endblock %}
