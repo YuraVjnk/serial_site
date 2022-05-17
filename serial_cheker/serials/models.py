@@ -71,12 +71,17 @@ class ImagesSerial(models.Model):
     serial = models.ForeignKey(Serials, on_delete=models.CASCADE, related_name='serials', null=True, blank=True)
 
 
-class Comment(models.Model):
+class Comment(MPTTModel):
     username = models.CharField(max_length=150)
+    parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
     email = models.EmailField(blank=True)
     comment = models.TextField()
     rating = models.IntegerField(validators=[MaxValueValidator(10), MinValueValidator(1)])
     serial = models.ForeignKey(Serials, on_delete=models.CASCADE, related_name='comment')
+    publish = models.DateTimeField(auto_now_add=True)
+
+    class MPTTMeta:
+        order_insertion_by = ['publish']
 
     def __str__(self):
         return f'{self.username}||{self.email} - {self.comment}||{self.rating}'
