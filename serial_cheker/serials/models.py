@@ -21,6 +21,8 @@ class Platforms(models.Model):
 class Genres(MPTTModel):
     name = models.CharField(max_length=100)
     parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
+    slug = models.SlugField(
+        max_length=255, null=True, blank=True)
 
     class MPTTMeta:
         order_insertion_by = ['name']
@@ -51,7 +53,7 @@ class Serials(models.Model):
         blank=True,
         null=True)
     slug = models.SlugField(
-        max_length=255)
+        max_length=255,)
     main_image = models.FileField(upload_to='media', default='No image')
     genre = models.ForeignKey(Genres, on_delete=models.SET_NULL, null=True, blank=True)
 
@@ -69,6 +71,28 @@ class Serials(models.Model):
 class ImagesSerial(models.Model):
     photos = models.ImageField()
     serial = models.ForeignKey(Serials, on_delete=models.CASCADE, related_name='serials', null=True, blank=True)
+
+
+class Series(models.Model):
+    image = models.ImageField()
+    serial = models.ForeignKey(Serials, on_delete=models.CASCADE, related_name='episode', null=True, blank=True)
+    title = models.CharField(max_length=255)
+    details = models.TextField()
+    episode_rating = models.IntegerField(
+        validators=[MaxValueValidator(10),
+                    MinValueValidator(1)])
+    slug = models.SlugField(
+        max_length=255)
+
+    def __str__(self):
+        return self.title
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('episode', kwargs={'serial_slug': self.serial.slug})
 
 
 class Comment(MPTTModel):

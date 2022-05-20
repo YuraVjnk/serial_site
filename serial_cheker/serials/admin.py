@@ -1,7 +1,7 @@
 from django.contrib import admin
+from mptt.admin import MPTTModelAdmin
 
-
-from .models import Serials, Platforms, ImagesSerial, Genres
+from .models import Serials, Platforms, ImagesSerial, Genres, Comment, Series
 
 
 # Register your models here.
@@ -33,3 +33,18 @@ class ImagesSerialAdmin(admin.ModelAdmin):
 class GenreAdmin(admin.ModelAdmin):
     list_display = ['name', 'parent']
     list_editable = ['parent']
+    prepopulated_fields = {'slug': (
+        'name',
+    )}
+
+
+@admin.register(Series)
+class GenreAdmin(admin.ModelAdmin):
+    list_display = ['title', 'image', 'details', 'serial', 'episode_rating']
+    list_editable = ['image', 'details', 'serial', 'episode_rating']
+    prepopulated_fields = {'slug': (
+        'title',
+    )}
+
+
+admin.site.register(Comment, MPTTModelAdmin)

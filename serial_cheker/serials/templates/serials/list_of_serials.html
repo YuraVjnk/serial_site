@@ -4,24 +4,22 @@
 {% block content %}
 
 <div class="genres">
-<h3>Жанры сериалов</h3>
+<h4>Жанры сериалов</h4>
 {% include "includes/genres.html" %}</div>
-<ul>
-{% for f in serials %}
-    <div class="serial-list">
-    <li>
+
+<div class="container">
+  <div class="row">
+        {% for f in serials %}
+      <div class="col serial-list">
+    {% if f.main_image != 'No image'%}
+    <img src="{{f.main_image.url}}">
+    {%endif%}
     <a href="{{f.get_absolute_url}}">
         {{f.title}} | {{f.platform}}
     </a>
-        <br>
-        {% if f.serials.all %}
-        {%for item in f.serials.all%}
-        <img src="{{item.photos.url}}">
-        {%endfor%}
-        {% endif %}
-    </li>
     </div>
-{%endfor%}
-</ul>
+        {%endfor%}
+  </div>
+</div>
 
 {% endblock %}

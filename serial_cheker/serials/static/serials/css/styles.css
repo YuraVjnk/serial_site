@@ -1,4 +1,3 @@
-
 html, body {
   height: 100%;
 }
@@ -6,15 +5,16 @@ html, body {
 body {
   font-size: 16px;
   font-family: 'Roboto', sans-serif;
-  background: #84A3BC
+  background: #fff
 }
 
 a {
- color : #FFFFFF;
+ color : #000;
+ text-decoration: none;
 }
 
 a:hover {
-    color : green;
+    text-decoration: underline;
 }
 
 .paginator {
@@ -62,20 +62,28 @@ a:hover {
 .serial-list{
     padding: 15px 20px;
     margin: auto;
-    margin-bottom: 20px;
+    margin-top: 150px;
+    margin-bottom: 30px;
     border-radius: 20px;
-    background: #CDCDCD;
     text-align: center;
-    width: 500px;
+    width: 330px;
+    height: 420px;
 
 }
 
-.serial-list li{
-    list-style-type: none;
+.serial-list a{
+    color: #9E9842;
+}
+
+.serial-list img{
+ width: 275px;
+ height: 380px;
 }
 
 .username {
     text-align: center;
+    margin-bottom: 50px;
+    background-color: #9E9842;
 }
 
 .username label {
@@ -131,6 +139,9 @@ a:hover {
     background: transparent;
 }
 
+.serial-page{
+    color: #000;
+}
 .
 
 .error{
@@ -141,6 +152,7 @@ a:hover {
 
 .form {
     background: transparent;
+    color: #fff;
 }
 
 .btn {
@@ -157,6 +169,23 @@ a:hover {
     font-family: 'Roboto', sans-serif;;
     cursor: pointer;
 }
+
+.btn_episode {
+
+    background: #000;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, 0);
+    padding: 7px 47px;
+    text-align: center;
+    width: 50px;
+    margin-bottom: 5px;
+    color: #fff;
+    border: none;
+    font-family: 'Roboto', sans-serif;;
+    cursor: pointer;
+}
+
 
 .btn:hover {
     opacity: 0.8;
@@ -201,16 +230,65 @@ a:hover {
 
 .genres {
     position: absolute;
-    background: #ECEBB1;
-    padding: 20px 15px;
-    margin: auto;
+    background: #DFB63F;
+    padding: 28px 10px;
+    margin-left: 10px;
+    margin-top: 88px;
+    width: 190px;
     border-radius: 10%;
+    font-size: 15px;
 
 
 }
 
-.genres h3 {
+.genres h4 {
     text=aling: center;
+    font-size: 18px;
+}
 
 
+.container_form {
+    background: #9E9842;
+    margin: auto;
+    width: 250px;
+
+}
+
+.container_form_adding {
+    background: #9E9842;
+    margin: auto;
+    width: 500px;
+
+}
+
+.container_form_adding textarea{
+    width: 480px;
+    height: 200px;
+
+}
+
+.serial-list-genre {
+    padding: 15px 20px;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    border-radius: 20px;
+    text-align: center;
+    width: 330px;
+    height: 420px;
+}
+
+.serial-list-genre img{
+ width: 275px;
+ height: 380px;
+}
+
+.serial-list-genre a{
+    color: #9E9842;
+}
+
+.serie-img {
+
+    width: 200px;
+    height: 150px;
 }

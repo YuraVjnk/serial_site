@@ -2,11 +2,25 @@
 
 
 {% block content %}
+<div class="serial-page">
+<style>
+        .children form{
+                margin-left: -48px;
+        }
+
+        .children .children form{
+                margin-left: -96px;
+        }
+</style>
+
 <div class="serial-info">
 <h1>{{serial.title}}</h1>
 <h2>{{serial.platform|upper}}</h2>
 <h3>Author Rating: {{serial.rating}} || User Rating:
 {% if avg %}{{avg|floatformat:2}}{%else%}No Rating Yet{%endif%}</h3>
+
+        <a href="{{serial.get_absolute_url}}series">Список Эпизодов</a>
+
 {% if serial.main_image != 'No image'%}
 <img src="{{serial.main_image.url}}" class="serial_image">
 {%else%}
@@ -24,14 +38,79 @@
 {% for f in form%}
 <div class="error">{{f.errors}}</div>
 <div class="form-group">
-<label for="{{f.id_for_label}}">{{f.label}}:</label>{{f}}
+<label for="{{f.id_for_label}}">{{f.label}}</label>{{f}}
 </div>
 {% endfor %}
-<button type="submit" class="btn">Добавить свой Отзыв</button>
+<button type="submit" class="btn">Добавить свой комментарий</button>
 </form>
 </div>
 
 
+{% load mptt_tags %}
+<div>
+{%if comments%}
+{% recursetree comments %}
+<div id="{{node.id}}" class="my-2 p-2" style="border: 4px solid #DFB63F">
+<div class="d-flex justify-content-between">By {{node.username}} <div>{{node.publish}}</div>
+        </div>
+<div>My Rating: {{node.rating}}</div>
+        <hr>
+<div>{{node.comment}}
+{% if node.level < 3%}
+<button class="button float-md-end" onclick="myFunction({{node.id}})">Reply</button>
+{%endif%}
+</div>
+</div>
+{%if not node.is_leaf_node%}
+        <div class="children ms-5"> {{children}}</div>
+{%endif%}
+{%endrecursetree%}
+{%else%}
+<h4 class="text-center">Твой комментарий может стать первым!</h4>
+{%endif%}
+</div>
+
+
+<script>
+
+      function formExit() {
+      document.getElementById("newForm").remove();
+      }
+
+      function myFunction(id)   {
+
+      if (document.contains(document.getElementById("newForm"))) {
+        document.getElementByID("newForm").remove();
+      }
+
+      var a = document.getElementById(id);
+      a.insertAdjacentHTML('afterend',
+      '<form id="newForm" class="form-insert py-2" method="post"> \
+      <div class="d-flex justify-content-between"><h2>Reply:</h2><div><button type="button" class="btn btn-outline-secondary" onclick="formExit()"">Close</button></div></div> \
+      <label for="id_name">Name:</label> \
+      <input type="text" name="username" class="col-sm-12" maxlength="100" required="" id="id_name">\
+      <select name="parent" class="d-none" id="id_parent"> \
+      <option value="' + id + '" selected="' + id + '"></option> \
+      </select> \
+      <label for="id_email">Email:</label> \
+      <input type="text" name="email" class="col-sm-12" maxlength="254" required="" id="id_email"> \
+      <label for="id_content">Content:</label> \
+      <textarea name="comment" cols="40" rows="5" class="form-control" required id="id_content"></textarea> \
+      <label for="id_rating">Rating:</label> \
+      <input type="integer" name="rating" class="col-sm-12" maxvalue=10 required="" id="id_rating"> \
+      {% csrf_token %} \
+      <button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button> \
+      </form>');
+}
+
+</script>
+{% endblock %}
+
+
+
+
+
+{%comment%}
 {%if comments%}
 {% for comment in comments%}
 <div class="comment">
@@ -44,4 +123,5 @@ Rating: {{comment.rating}}/10
 {%else%}
 <label>No Comments Yet, you can be first!</label>
 {%endif%}
-{% endblock %}
+</div>
+{%endcomment%}

@@ -5,17 +5,13 @@
 <h3>Жанры сериалов</h3>
 {% include "includes/genres.html" %}</div>
 <ul>{% for f in genre %}
-    <div class="serial-list">
+    <div class="serial-list-genre">
     <li>
-    <a href="{{f.get_absolute_url}}">
-        {{f.title}} | {{f.platform}}
-    </a>
-        {% if f.serials.all %}
+        <img src="{{f.main_image.url}}">
         <br>
-        {%for item in f.serials.all%}
-        <img src="{{item.photos.url}}">
-        {%endfor%}
-        {% endif %}
+            <a href="{{f.get_absolute_url}}">
+        {{f.title}}
+    </a>
     </li>
     </div>
 {%endfor%}

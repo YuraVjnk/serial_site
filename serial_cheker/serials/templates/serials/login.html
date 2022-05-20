@@ -1,9 +1,22 @@
 {% extends 'serials\base.html'%}
 
 {%block content%}
+<div class="container_form">
 <form method="post">
     {% csrf_token %}
-    {{form.as_p}}
-    <button type="submit">Авторизация</button>
+    <div class="mb-3">
+    <div>{{form.non_field_errors}}</div>
+    {% for f in form %}
+    <p class="text-center"><label for="{{f.id_for_label}}" class="label_login">{{f.label}}</label><br> {{f}}</p>
+    {% endfor %}
+    </div>
+    <div>{{f.errors}}</div>
+    <button type="submit" class="btn btn-outline-warning label_login">Авторизация</button>
 </form>
+</div>
+
+
 {%endblock%}
+
+
+

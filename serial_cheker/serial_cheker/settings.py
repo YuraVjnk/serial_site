@@ -39,6 +39,10 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'captcha',
     'mptt',
+    "bootstrap5",
+    'crispy_forms',
+
+
     'serials.apps.SerialsConfig',
 ]
 
@@ -134,3 +138,5 @@ RECAPTCHA_PUBLIC_KEY = '6Lc0FekfAAAAAEID6_5fTLpVaN7NP2GrbL-OyfgG'
 RECAPTCHA_PRIVATE_KEY = '6Lc0FekfAAAAAF5KoiL7bHDw8q-8e7jxK-5O2joO'
 RECAPTCHA_DEFAULT_ACTION = 'generic'
 RECAPTCHA_SCORE_THRESHOLD = 0.5
+
+CRISPY_TEMPLATE_PACK = 'uni_form'

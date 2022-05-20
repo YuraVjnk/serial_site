@@ -1,0 +1,69 @@
+{% extends 'serials/base.html'%}
+
+
+{% block content %}
+<div class="genres mr-5">
+<form action="{%url 'movie-filter' tv_show.slug %}" method="get">
+    {%if rating%}
+    <h4>Фильтр по рейтингу</h4>
+    <ul>
+      {% for f in rating %}
+      <li>
+        <input type="checkbox" name="episode_rating" value="{{f.episode_rating}}">
+        <span>{{f.episode_rating}}</span>
+      </li>
+      {%endfor%}
+    </ul>
+    {%endif%}
+    {%if serial_title%}
+    <h4>Фильтр по имени</h4>
+    <ul>
+      {% for f in serial_title %}
+      <li>
+        <input type="checkbox" name="title" value="{{f.title}}">
+        <span>{{f.title}}</span>
+      </li>
+      {%endfor%}
+    </ul>
+    <button type="submit">Найти</button>
+    {%else%}
+    <h4>Ни одна серия не добавлена!</h4>
+    {%endif%}
+</form>
+</div>
+<div class="container">
+{% if serials.views.EpisodeFilter %} b
+<a class="btn btn-warning" href="{{form.get_absolute_url}}create/" role="button">Створити</a>
+{%endif%}
+<div class="container-form">
+  {% for f in serie %}
+  <div class="row gx=2 mb-3 align-items-center" style="border: 4px solid #DFB63F">
+
+    <div class="col text-center">
+    {{f.title}}
+    </div>
+
+    <div class="col text-center">
+    <img height="126" width="240"  class="img-thumbnail img-fluid" src="{{f.image.url}}">
+    </div>
+
+    <div class="col text-center">
+    {{f.episode_rating}}
+    </div>
+
+    <div class="col text-center">
+    {{f.details}}
+    </div>
+
+    <div class="col text-center">
+          <a href="{{f.get_absolute_url}}{{f.slug}}/delete/" class="btn btn-warning" role="button">Видатили</a> <br>
+          <a href="{{f.get_absolute_url}}{{f.slug}}/update/" class="btn btn-warning" role="button">Оновити</a>
+    </div>
+
+    </div>
+    {%endfor%}
+</div>
+</div>
+
+
+{% endblock %}

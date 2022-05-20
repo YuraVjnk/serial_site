@@ -2,9 +2,11 @@
 
 
 {% block content %}
+<div class="container_form">
 <ul>
 {%for serial in serials%}
     <li><a href="{{serial.get_absolute_url}}">{{serial.title}}</a> ||| {{serial.rating}}</li>
 {%endfor%}
 </ul>
+</div>
 {% endblock %}
